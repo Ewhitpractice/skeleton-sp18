@@ -1,5 +1,7 @@
 import java.lang.Math;
 
+import java.lang.Math;
+
 public class Planet
 {
     public double xxPos;
@@ -114,6 +116,7 @@ public class Planet
 
     public void draw()
     {
-        StdDraw.picture(this.xxPos,this.YYpos,this.imgFileName);
+        String image = "images/"+this.imgFileName;
+        StdDraw.picture(this.xxPos,this.yyPos,image);
     }
 }
