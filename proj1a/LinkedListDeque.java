@@ -140,7 +140,7 @@ public class LinkedListDeque<T>
         return pointer.item;
     }
 
-    public T getRecursive(int index, ItemNode<T> current_node)
+    private T getRecursive(int index, ItemNode<T> current_node)
     {
         if(index == 0) {
             return sentinel.next.item;
