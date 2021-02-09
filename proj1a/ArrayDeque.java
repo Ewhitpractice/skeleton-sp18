@@ -13,13 +13,13 @@ public class ArrayDeque<T>
 
     private void resize(int capacity) {
         T[] items2 = (T[]) new Object[capacity];
-        System.arraycopy(items2,0,items,0,size);
+        System.arraycopy(items2, 0, items, 0, size);
         items = items2;
     }
 
     public void addLast(T item) {
         if(size == items.length) {
-            resize(size*REFACTOR);
+            resize(size * REFACTOR);
         }
 
         if(nextLast == items.length) {
@@ -32,32 +32,32 @@ public class ArrayDeque<T>
 
     public void addFirst(T item) {
         if(size == items.length) {
-            resize(size*REFACTOR);
+            resize(size * REFACTOR);
         }
 
         items[nextFirst] = item;
         if(nextFirst == 0) {
-            nextFirst = items.length-1;
+            nextFirst = items.length - 1;
         }
         nextFirst--;
         size++;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
+
         return size == 0;
     }
 
-    public int size()
-    {
+    public int size() {
+
         return size;
     }
 
     public void printDeque() {
         T[] arrayToPrint = (T[]) new Object[size];
         int array_to_print_index = 0;
-        int current_index = nextFirst+1;
-        while(current_index != nextLast-1) {
+        int current_index = nextFirst + 1;
+        while(current_index != nextLast - 1) {
             if(current_index == items.length)
             {
                 current_index = 0;
@@ -78,7 +78,7 @@ public class ArrayDeque<T>
             return null;
         }
 
-        if(nextFirst + 1 == items.length-1) {
+        if(nextFirst + 1 == items.length - 1) {
             remove_index = 0;
             nextLast = remove_index;
         }
@@ -86,11 +86,11 @@ public class ArrayDeque<T>
         T removed = items[remove_index];
         items[remove_index] = null;
         nextFirst = remove_index;
+        size = size - 1;
         return removed;
     }
 
-    public T removeLast()
-    {
+    public T removeLast() {
         int remove_index;
         if(size == 0) {
             return null;
@@ -103,6 +103,7 @@ public class ArrayDeque<T>
         T removed = items[remove_index];
         items[remove_index] = null;
         nextFirst = remove_index;
+        size = size - 1;
         return removed;
     }
 
@@ -110,8 +111,8 @@ public class ArrayDeque<T>
     {
         T[] firstToLast = (T[]) new Object[size];
         int FTL_index = 0;
-        int items_index = nextFirst+1;
-        while(items_index != nextLast-1) {
+        int items_index = nextFirst + 1;
+        while(items_index != nextLast - 1) {
             if(items_index == items.length)
             {
                 items_index = 0;
