@@ -1,7 +1,7 @@
 public class LinkedListDeque<T>
 {
     private final ItemNode<T> sentinel;
-    private int size;
+    private int size = 0;
 
     private static class ItemNode<T> {
         public ItemNode<T> prev; //arrow to the previous element
@@ -95,7 +95,7 @@ public class LinkedListDeque<T>
     public T removeLast()
     {
         T removed = sentinel.prev.item;
-        ItemNode<T> to_remove = sentinel.next;
+        ItemNode<T> to_remove = sentinel.prev;
         if(size == 0) {
             return null;
         }
