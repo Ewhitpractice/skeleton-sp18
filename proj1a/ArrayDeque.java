@@ -4,18 +4,18 @@ public class ArrayDeque<T>
     private int size = 0;
     private int nextFirst = 4;
     private int nextLast = 5;
-    private int REFACTOR = size*2;
+    private int REFACTOR = 2;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
     }
 
-    private T[] makeFirstToLast()
+    public T[] makeFirstToLast()
     {
         T[] firstToLast = (T[]) new Object[size];
         int FTL_index = 0;
         int items_index = nextFirst+1;
-        while(items_index != nextLast){
+        while(FTL_index != size){
             if(items_index == items.length)
             {
                 items_index = 0;
@@ -29,7 +29,7 @@ public class ArrayDeque<T>
 
     private void resize(int capacity) {
         T[] items2 = (T[]) new Object[capacity];
-        T[] ftl = this.makeFirstToLast();
+        T[] ftl = makeFirstToLast();
         System.arraycopy(ftl, 0, items2,0,size);
         items = items2;
         nextFirst = items.length-1;
@@ -39,7 +39,7 @@ public class ArrayDeque<T>
     public void addLast(T item){
         if(size == items.length)
         {
-            resize(REFACTOR);
+            resize(size*REFACTOR);
         }
         if(nextLast == items.length)
         {
@@ -52,7 +52,7 @@ public class ArrayDeque<T>
 
     public void addFirst(T item){
         if(size == items.length) {
-            resize(REFACTOR);
+            resize(size*REFACTOR);
         }
         if(nextFirst == -1)
         {
@@ -108,13 +108,13 @@ public class ArrayDeque<T>
     }
 
     public T get(int index){
-        T[] firstToLast = this.makeFirstToLast();
+        T[] firstToLast = makeFirstToLast();
         return firstToLast[index];
     }
 
     public void printDeque()
     {
-        T[] firstToLast = this.makeFirstToLast();
+        T[] firstToLast = makeFirstToLast();
         for(int i = 0; i < firstToLast.length; i++) {
             System.out.print(firstToLast[i]);
         }
