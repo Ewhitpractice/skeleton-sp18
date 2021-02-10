@@ -126,14 +126,13 @@ public class LinkedListDeque<T>
 
     private T getRecursive(int index, ItemNode pointer) {
         if (index == 0)
-            return getRecursive(0);
-        return getRecursive(index);
+            return sentinel.next.item;
+        return getRecursive(index-1,pointer.next);
     }
     public T getRecursive(int index) {
-        ItemNode<T> pointer = sentinel;
         if (index == 0)
-            return pointer.item;
-        return getRecursive(index-1,pointer.next);
+            return sentinel.item;
+        return getRecursive(index-1,sentinel.next);
     }
 }
 
