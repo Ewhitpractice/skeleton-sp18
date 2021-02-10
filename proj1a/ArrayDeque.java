@@ -51,24 +51,6 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    public void printDeque() {
-        T[] arrayToPrint = (T[]) new Object[size];
-        int array_to_print_index = 0;
-        int current_index = nextFirst + 1;
-        while (current_index != nextLast - 1) {
-            if (current_index == items.length) {
-                current_index = 0;
-            }
-            arrayToPrint[array_to_print_index] = items[current_index];
-            array_to_print_index++;
-            current_index++;
-        }
-
-        for(int i = 0; i < size; i++) {
-            System.out.print(arrayToPrint[i]);
-        }
-    }
-
     public T removeFirst() {
         int remove_index;
         if (size == 0) {
@@ -123,4 +105,24 @@ public class ArrayDeque<T> {
         }
         return firstToLast[index];
     }
+
+    public void printDeque() {
+        T[] firstToLast = (T[]) new Object[size];
+        int FTL_index = 0;
+        int items_index = nextFirst + 1;
+        while (items_index != nextLast) {
+            if (items_index == items.length)
+            {
+                items_index = 0;
+            }
+            firstToLast[FTL_index] = items[items_index];
+            FTL_index++;
+            items_index++;
+        }
+
+        for(int i = 0; i < firstToLast.length; i++) {
+            System.out.print(firstToLast[i]);
+        }
+    }
 }
+
