@@ -1,6 +1,6 @@
 public class ArrayDeque<T> {
     private T[] items;
-    private int size;
+    private int size = 0;
     private int nextFirst = 4;
     private int nextLast = 5;
     private int REFACTOR = 2;
@@ -33,11 +33,10 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(size * REFACTOR);
         }
-
-        items[nextFirst] = item;
         if (nextFirst == 0) {
             nextFirst = items.length - 1;
         }
+        items[nextFirst] = item;
         nextFirst--;
         size++;
     }
@@ -75,12 +74,13 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-
-        if (nextFirst + 1 == items.length - 1) {
+        if(nextFirst == items.length-1) {
             remove_index = 0;
-            nextLast = remove_index;
         }
-        remove_index = nextFirst + 1;
+        else
+        {
+            remove_index = nextFirst + 1;
+        }
         T removed = items[remove_index];
         items[remove_index] = null;
         nextFirst = remove_index;
@@ -95,12 +95,14 @@ public class ArrayDeque<T> {
         }
         if (nextLast == 0) {
             remove_index = items.length-1;
-            nextLast = remove_index;
         }
-        remove_index = nextLast - 1;
+        else
+        {
+            remove_index = nextLast - 1;
+        }
         T removed = items[remove_index];
         items[remove_index] = null;
-        nextFirst = remove_index;
+        nextLast = remove_index;
         size = size - 1;
         return removed;
     }
@@ -122,4 +124,3 @@ public class ArrayDeque<T> {
         return firstToLast[index];
     }
 }
-
