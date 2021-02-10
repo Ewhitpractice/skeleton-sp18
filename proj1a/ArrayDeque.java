@@ -112,7 +112,7 @@ public class ArrayDeque<T> {
         T[] firstToLast = (T[]) new Object[size];
         int FTL_index = 0;
         int items_index = nextFirst + 1;
-        while (items_index != nextLast - 1) {
+        while (items_index != nextLast) {
             if (items_index == items.length)
             {
                 items_index = 0;
