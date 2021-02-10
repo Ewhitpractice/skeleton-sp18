@@ -1,125 +1,139 @@
-public class ArrayDeque<T> {
-    private T[] items;
-    private int size;
-    private int nextFirst = 4;
-    private int nextLast = 5;
-    private int REFACTOR = 2;
+public class LinkedListDeque<T>
+{
+    private final ItemNode<T> sentinel;
+    private int size = 0;
 
-    public ArrayDeque()
-    {
-        items = (T[]) new Object[8];
+    private static class ItemNode<T> {
+        private ItemNode<T> prev; //arrow to the previous element
+        private T item; //the item stored in the list
+        private ItemNode<T> next; //arrow to the next element
+
+        public ItemNode(T x)
+        {
+            prev = null;
+            next = null;
+            item = x;
+        }
     }
 
-    private void resize(int capacity) {
-        T[] items2 = (T[]) new Object[capacity];
-        System.arraycopy(items2, 0, items, 0, size);
-        items = items2;
-    }
-
-    public void addLast(T item) {
-        if (size == items.length) {
-            resize(size * REFACTOR);
-        }
-
-        if (nextLast == items.length) {
-            nextLast = 0;
-        }
-        items[nextLast] = item;
-        nextLast++;
-        size++;
+    public LinkedListDeque() {
+        sentinel = new ItemNode<>(null);
+        size = 0;
     }
 
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(size * REFACTOR);
+        ItemNode<T> first_item = new ItemNode<>(item);
+        if (size == 0) {
+            sentinel.next = first_item;
+            first_item.prev = sentinel;
+            sentinel.prev = first_item;
+            first_item.next = sentinel;
         }
+        ItemNode<T> second_item = sentinel.next;
+        first_item.next = second_item;
+        sentinel.next = first_item;
+        second_item.prev = first_item;
+        first_item.prev = sentinel;
+        size = size + 1;
+    }
 
-        items[nextFirst] = item;
-        if (nextFirst == 0) {
-            nextFirst = items.length - 1;
+    public void addLast(T item) {
+        ItemNode<T> last_item = new ItemNode<>(item);
+        if (size == 0)
+        {
+            sentinel.next = last_item;
+            last_item.prev = sentinel;
+            last_item.next = sentinel;
+            sentinel.prev = last_item;
         }
-        nextFirst--;
-        size++;
+        ItemNode<T> second_to_last = sentinel.prev;
+        second_to_last.next = last_item;
+        last_item.prev = second_to_last;
+        last_item.next = sentinel;
+        sentinel.prev = last_item;
+        size = size + 1;
     }
 
     public boolean isEmpty() {
-
         return size == 0;
     }
 
-    public int size() {
-
+    public int size(){
         return size;
     }
 
     public void printDeque() {
-        T[] arrayToPrint = (T[]) new Object[size];
-        int array_to_print_index = 0;
-        int current_index = nextFirst + 1;
-        while (current_index != nextLast - 1) {
-            if (current_index == items.length) {
-                current_index = 0;
-            }
-            arrayToPrint[array_to_print_index] = items[current_index];
-            array_to_print_index++;
-            current_index++;
-        }
-
-        for(int i = 0; i < size; i++) {
-            System.out.print(arrayToPrint[i]);
+        ItemNode<T> pointer = new ItemNode<>(sentinel.next.item);
+        while(pointer != null) {
+            String print_object = pointer.item.toString();
+            System.out.println(print_object);
+            pointer = pointer.next;
         }
     }
 
     public T removeFirst() {
-        int remove_index;
         if (size == 0) {
             return null;
         }
-
-        if (nextFirst + 1 == items.length - 1) {
-            remove_index = 0;
-            nextLast = remove_index;
+        T removed = sentinel.next.item;
+        if (size == 1) {
+            sentinel.next = null;
+            sentinel.prev = null;
+            size = 0;
+            return removed;
         }
-        remove_index = nextFirst + 1;
-        T removed = items[remove_index];
-        items[remove_index] = null;
-        nextFirst = remove_index;
+        ItemNode<T> to_remove = sentinel.next;
+        ItemNode<T> new_first = to_remove.next;
+        sentinel.next = new_first;
+        new_first.prev = sentinel;
+        to_remove.next = null;
+        to_remove.prev = null;
         size = size - 1;
         return removed;
     }
 
-    public T removeLast() {
-        int remove_index;
+    public T removeLast()
+    {
         if (size == 0) {
             return null;
         }
-        if (nextLast == 0) {
-            remove_index = items.length-1;
-            nextLast = remove_index;
+        T removed = sentinel.prev.item;
+        if (size == 1) {
+            sentinel.next = null;
+            sentinel.prev = null;
+            size = 0;
+            return removed;
         }
-        remove_index = nextLast - 1;
-        T removed = items[remove_index];
-        items[remove_index] = null;
-        nextFirst = remove_index;
-        size = size - 1;
+        ItemNode<T> to_remove = sentinel.prev;
+        ItemNode<T> new_last = to_remove.prev;
+        sentinel.prev = new_last;
+        new_last.next = sentinel;
+        to_remove.next = null;
+        to_remove.prev = null;
+        size = size-1;
         return removed;
     }
 
     public T get(int index)
     {
-        T[] firstToLast = (T[]) new Object[size];
-        int FTL_index = 0;
-        int items_index = nextFirst + 1;
-        while (items_index != nextLast - 1) {
-            if (items_index == items.length)
-            {
-                items_index = 0;
-            }
-            firstToLast[FTL_index] = items[items_index];
-            FTL_index++;
-            items_index++;
+        ItemNode<T> pointer = sentinel.next;
+        while (index > 0) {
+            pointer = pointer.next;
+            index = index - 1;
         }
-        return firstToLast[index];
+        return pointer.item;
+    }
+
+    private T getRecursive(int index, ItemNode pointer) {
+        if (index == 0)
+            return getRecursive(0);
+        return getRecursive(index);
+    }
+    public T getRecursive(int index) {
+        ItemNode<T> pointer = sentinel;
+        if (index == 0)
+            return pointer.item;
+        return getRecursive(index-1,pointer.next);
     }
 }
 
