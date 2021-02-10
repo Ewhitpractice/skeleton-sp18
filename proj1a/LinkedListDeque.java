@@ -134,4 +134,5 @@ public class LinkedListDeque<T>
             return sentinel.item;
         return getRecursive(index-1,sentinel.next);
 }
+}
 
