@@ -10,14 +10,13 @@ public class ArrayDeque<T>
         items = (T[]) new Object[8];
     }
 
-    public T[] makeFirstToLast()
+    private T[] makeFirstToLast()
     {
         T[] firstToLast = (T[]) new Object[size];
         int FTL_index = 0;
         int items_index = nextFirst+1;
         while(FTL_index != size){
-            if(items_index == items.length)
-            {
+            if(items_index == items.length) {
                 items_index = 0;
             }
             firstToLast[FTL_index] = items[items_index];
@@ -37,12 +36,10 @@ public class ArrayDeque<T>
     }
 
     public void addLast(T item){
-        if(size == items.length)
-        {
+        if(size == items.length) {
             resize(size*REFACTOR);
         }
-        if(nextLast == items.length)
-        {
+        if(nextLast == items.length) {
             nextLast = 0;
         }
         items[nextLast] = item;
@@ -77,6 +74,10 @@ public class ArrayDeque<T>
         {
             return null;
         }
+        if(items.length > size*2)
+        {
+            resize(size/REFACTOR);
+        }
         remove_index = nextFirst+1;
         if(nextFirst+1 == items.length)
         {
@@ -94,6 +95,10 @@ public class ArrayDeque<T>
         if(size==0)
         {
             return null;
+        }
+        if(items.length > size*2)
+        {
+            resize(size/REFACTOR);
         }
         remove_index = nextLast-1;
         if(nextLast-1 == -1)
