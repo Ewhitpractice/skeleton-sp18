@@ -76,7 +76,7 @@ public class ArrayDeque<T>
         }
         if(items.length > size*2)
         {
-            resize(size/REFACTOR);
+            resize(items.length/REFACTOR);
         }
         remove_index = nextFirst+1;
         if(nextFirst+1 == items.length)
@@ -98,7 +98,7 @@ public class ArrayDeque<T>
         }
         if(items.length > size*2)
         {
-            resize(size/REFACTOR);
+            resize(items.length/REFACTOR);
         }
         remove_index = nextLast-1;
         if(nextLast-1 == -1)
