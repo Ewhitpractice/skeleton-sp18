@@ -26,7 +26,6 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        CharacterComparator obo = new OffByOne();
         Deque<Character> forward = wordToDeque(word);
         Deque<Character> backward = new LinkedListDeque<Character>();
         for (int i = 1; i < word.length() + 1; i++)
@@ -37,7 +36,7 @@ public class Palindrome {
             if (i == word.length() / 2) {
                 continue;
             }
-            if (!obo.equalChars(forward.get(i), backward.get(i))) {
+            if (!cc.equalChars(forward.get(i), backward.get(i))) {
                 return false;
             }
         }
