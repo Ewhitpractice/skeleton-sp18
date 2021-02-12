@@ -1,7 +1,7 @@
-public class LinkedListDeque<T>
+public class LinkedListDeque<T> implements Deque<T>
 {
     private final ItemNode<T> sentinel;
-    private int size = 0;
+    private int size;
 
     private static class ItemNode<T> {
         private ItemNode<T> prev; //arrow to the previous element
@@ -21,6 +21,7 @@ public class LinkedListDeque<T>
         size = 0;
     }
 
+    @Override
     public void addFirst(T item) {
         ItemNode<T> first_item = new ItemNode<>(item);
         if (size == 0) {
@@ -37,6 +38,7 @@ public class LinkedListDeque<T>
         size = size + 1;
     }
 
+    @Override
     public void addLast(T item) {
         ItemNode<T> last_item = new ItemNode<>(item);
         if (size == 0)
@@ -54,14 +56,17 @@ public class LinkedListDeque<T>
         size = size + 1;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public void printDeque() {
         ItemNode<T> pointer = new ItemNode<>(sentinel.next.item);
         while(pointer != null) {
@@ -71,6 +76,7 @@ public class LinkedListDeque<T>
         }
     }
 
+    @Override
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -92,6 +98,7 @@ public class LinkedListDeque<T>
         return removed;
     }
 
+    @Override
     public T removeLast()
     {
         if (size == 0) {
@@ -114,6 +121,7 @@ public class LinkedListDeque<T>
         return removed;
     }
 
+    @Override
     public T get(int index)
     {
         ItemNode<T> pointer = sentinel.next;
