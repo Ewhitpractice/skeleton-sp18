@@ -6,10 +6,10 @@ public class OffByN implements CharacterComparator {
 
     @Override
     public boolean equalChars(char x, char y) {
-        if (Character.toLowerCase(x) - N == Character.toLowerCase(y)) {
+        if (x - N == y) {
             return true;
         }
-        if (Character.toLowerCase(x) + N == Character.toLowerCase(y)) {
+        if (x + N == y) {
             return true;
         }
         else {
