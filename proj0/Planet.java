@@ -1,5 +1,7 @@
 import java.lang.Math;
 
+import java.lang.Math;
+
 public class Planet
 {
     public double xxPos;
@@ -8,7 +10,7 @@ public class Planet
     public double yyVel;
     public double mass;
     public String imgFileName;
-    static final double gravity = 6.67e-11;
+    private static final double gravity = 6.67e-11;
 
     public Planet(double xP, double yP, double xV, double yV, double m, String img)
     {
@@ -114,6 +116,7 @@ public class Planet
 
     public void draw()
     {
-        StdDraw.picture(this.xxPos,this.YYpos,this.imgFileName);
+        String image = "images/"+this.imgFileName;
+        StdDraw.picture(this.xxPos,this.yyPos,image);
     }
 }

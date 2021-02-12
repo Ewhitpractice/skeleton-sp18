@@ -1,13 +1,12 @@
 public class LinkedListDeque<T>
 {
     private final ItemNode<T> sentinel;
-    private int size;
+    private int size = 0;
 
-    private static class ItemNode<T>
-    {
-        public ItemNode<T> prev; //arrow to the previous element
-        public T item; //the item stored in the list
-        public ItemNode<T> next; //arrow to the next element
+    private static class ItemNode<T> {
+        private ItemNode<T> prev; //arrow to the previous element
+        private T item; //the item stored in the list
+        private ItemNode<T> next; //arrow to the next element
 
         public ItemNode(T x)
         {
@@ -17,18 +16,14 @@ public class LinkedListDeque<T>
         }
     }
 
-    public LinkedListDeque()
-    {
+    public LinkedListDeque() {
         sentinel = new ItemNode<>(null);
         size = 0;
     }
 
-    public void addFirst(T item)
-    {
+    public void addFirst(T item) {
         ItemNode<T> first_item = new ItemNode<>(item);
-
-        if(size == 0)
-        {
+        if (size == 0) {
             sentinel.next = first_item;
             first_item.prev = sentinel;
             sentinel.prev = first_item;
@@ -42,10 +37,9 @@ public class LinkedListDeque<T>
         size = size + 1;
     }
 
-    public void addLast(T item)
-    {
+    public void addLast(T item) {
         ItemNode<T> last_item = new ItemNode<>(item);
-        if(size == 0)
+        if (size == 0)
         {
             sentinel.next = last_item;
             last_item.prev = sentinel;
@@ -60,42 +54,35 @@ public class LinkedListDeque<T>
         size = size + 1;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size()
-    {
+    public int size(){
         return size;
     }
 
-    public void printDeque()
-    {
+    public void printDeque() {
         ItemNode<T> pointer = new ItemNode<>(sentinel.next.item);
-        while(pointer != null)
-        {
+        while(pointer != null) {
             String print_object = pointer.item.toString();
             System.out.println(print_object);
             pointer = pointer.next;
         }
     }
 
-    public T removeFirst()
-    {
-        T removed = sentinel.next.item;
-        ItemNode<T> to_remove = sentinel.next;
-        if(size == 0)
-        {
+    public T removeFirst() {
+        if (size == 0) {
             return null;
         }
-        if(size == 1)
-        {
+        T removed = sentinel.next.item;
+        if (size == 1) {
             sentinel.next = null;
             sentinel.prev = null;
             size = 0;
             return removed;
         }
+        ItemNode<T> to_remove = sentinel.next;
         ItemNode<T> new_first = to_remove.next;
         sentinel.next = new_first;
         new_first.prev = sentinel;
@@ -107,19 +94,17 @@ public class LinkedListDeque<T>
 
     public T removeLast()
     {
-        T removed = sentinel.next.item;
-        ItemNode<T> to_remove = sentinel.next;
-        if(size == 0)
-        {
+        if (size == 0) {
             return null;
         }
-        if(size == 1)
-        {
+        T removed = sentinel.prev.item;
+        if (size == 1) {
             sentinel.next = null;
             sentinel.prev = null;
             size = 0;
             return removed;
         }
+        ItemNode<T> to_remove = sentinel.prev;
         ItemNode<T> new_last = to_remove.prev;
         sentinel.prev = new_last;
         new_last.next = sentinel;
@@ -131,20 +116,23 @@ public class LinkedListDeque<T>
 
     public T get(int index)
     {
-        ItemNode<T> pointer = new ItemNode<>(sentinel.next.item);
-        while(index > 0)
-        {
+        ItemNode<T> pointer = sentinel.next;
+        while (index > 0) {
             pointer = pointer.next;
             index = index - 1;
         }
         return pointer.item;
     }
 
-    public T getRecursive(int index, ItemNode<T> current_node)
-    {
-        if(index == 0) {
+    private T getRecursive(int index, ItemNode pointer) {
+        if (index == 0)
+            return (T)pointer.item;
+        return getRecursive(index-1,pointer.next);
+    }
+    public T getRecursive(int index) {
+        if (index == 0)
             return sentinel.next.item;
-        }
-        return getRecursive(index-1,current_node.next);
+        return getRecursive(index-1,sentinel.next.next);
     }
 }
+
