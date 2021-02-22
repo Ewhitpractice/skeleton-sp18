@@ -34,7 +34,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
             rb[first] = x;
         }
         else {
-            if(last == rb.length-1) {
+            if(last == rb.length - 1) {
                 last = 0;
             }
             else {
