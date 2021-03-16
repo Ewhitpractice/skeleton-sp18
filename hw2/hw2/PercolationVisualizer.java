@@ -22,8 +22,8 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class PercolationVisualizer {
-/*
-    // delay in miliseconds (controls animation speed)
+
+    // delay in milliseconds (controls animation speed)
     private static final int DELAY = 100;
 
     // draw N-by-N percolation system
@@ -80,8 +80,9 @@ public class PercolationVisualizer {
         }
     }
 
+    /** remember to change back to String filename = args[0]; **/
     public static void main(String[] args) {
-        String filename = args[0];
+        String filename = "/Users/emilywhitney/Desktop/Code/skeleton-sp18/hw2/inputFiles/greeting57.txt";
         simulateFromFile(filename);
-    }*/
+    }
 }
