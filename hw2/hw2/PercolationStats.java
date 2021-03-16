@@ -1,7 +1,6 @@
 package hw2;
 import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
-import java.lang.Math;
 
 public class PercolationStats {
     //instance variables
@@ -13,7 +12,7 @@ public class PercolationStats {
 
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
-        if(N<=0 || T <= 0) {
+        if (N <= 0 || T <= 0) {
             throw new java.lang.IllegalArgumentException();
         }
         makePercolation = pf;
@@ -23,7 +22,7 @@ public class PercolationStats {
         makeArray();
     }
 
-    public double mean(){
+    public double mean() {
         return StdStats.mean(openSitesArray);
     }
 
@@ -33,12 +32,12 @@ public class PercolationStats {
     }
 
     public double confidenceLow() {
-        return (mean() - ((1.96*(stddev()))/Math.sqrt(timesRepeated)));
+        return (mean() - ((1.96 * (stddev())) / Math.sqrt(timesRepeated)));
 
     }
 
     public double confidenceHigh() {
-        return (mean() + ((1.96*(stddev()))/Math.sqrt(timesRepeated)));
+        return (mean() + ((1.96 * (stddev())) / Math.sqrt(timesRepeated)));
     }
 
     //helper methods
@@ -46,11 +45,11 @@ public class PercolationStats {
         //initialize all sites to be blocked
         Percolation percolation = makePercolation.make(sideSize);
         //repeat until system percolates
-        while(!percolation.percolates()) {
+        while (!percolation.percolates()) {
             //choose a random blocked site and open
             int randomRow = StdRandom.uniform(sideSize);
             int randomCol = StdRandom.uniform(sideSize);
-            while(percolation.isOpen(randomRow,randomCol)) {
+            while (percolation.isOpen(randomRow, randomCol)) {
                 randomRow = StdRandom.uniform(sideSize);
                 randomCol = StdRandom.uniform(sideSize);
             }
@@ -60,8 +59,12 @@ public class PercolationStats {
     }
 
     private void makeArray() {
-        for(int i = 0; i < timesRepeated; i++) {
+        for (int i = 0; i < timesRepeated; i++) {
             openSitesArray[i] = findNumberOfOpenSites();
         }
+    }
+
+    public static void main(String[] args) {
+
     }
 }
