@@ -41,7 +41,7 @@ public class Percolation {
             openSpaces++;
         }
 
-        if (left > 0 && left < sideSize * sideSize && grid[left] && currentSquare % sideSize != 0) {
+        if (left >= 0 && left < sideSize * sideSize && grid[left] && currentSquare % sideSize != 0) {
             backwash.union(currentSquare, left);
             totalGrid.union(currentSquare, left);
             if (backwash.connected(left, topOfGrid)) {
@@ -57,7 +57,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
-        if (up > 0 && up < sideSize * sideSize && grid[up]) {
+        if (up >= 0 && up < sideSize * sideSize && grid[up]) {
             backwash.union(currentSquare, up);
             totalGrid.union(currentSquare, up);
             if (backwash.connected(up, topOfGrid)) {
@@ -87,8 +87,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         checkArgument(row, col);
         int currentSquare = xyTo1D(row, col);
-        if(backwash.connected(topOfGrid, currentSquare) && grid[currentSquare])
-        {
+        if (backwash.connected(topOfGrid, currentSquare) && grid[currentSquare]) {
             return true;
         }
         return false;
@@ -99,7 +98,10 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        return totalGrid.connected(topOfGrid, bottomOfGrid);
+        if(totalGrid.connected(topOfGrid, bottomOfGrid)) {
+            return true;
+        }
+        return false;
     }
 
     //helper method
@@ -107,7 +109,7 @@ public class Percolation {
         for (int i = 0; i < sideSize; i++) {
             backwash.union(topOfGrid, i);
         }
-        for (int i = sideSize * sideSize; i > sideSize * sideSize - sideSize; i--) {
+        for (int i = sideSize * sideSize - 1; i >= sideSize * sideSize - sideSize; i--) {
             totalGrid.union(bottomOfGrid, i);
         }
     }
@@ -122,5 +124,6 @@ public class Percolation {
         }
     }
 
-
+    public static void main(String[] args) {
+    }
 }
