@@ -49,7 +49,8 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
-        if (right > 0 && right < sideSize * sideSize && grid[right]) {
+
+        if (right > 0 && right < sideSize * sideSize && grid[right] && currentSquare+1 % sideSize != 0) {
             backwash.union(currentSquare, right);
             totalGrid.union(currentSquare, right);
             if (backwash.connected(right, topOfGrid)) {
@@ -57,6 +58,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
+
         if (up >= 0 && up < sideSize * sideSize && grid[up]) {
             backwash.union(currentSquare, up);
             totalGrid.union(currentSquare, up);
@@ -65,6 +67,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
+
         if (down > 0 && down < sideSize * sideSize && grid[down]) {
             backwash.union(currentSquare, down);
             totalGrid.union(currentSquare, down);
