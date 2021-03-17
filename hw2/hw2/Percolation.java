@@ -58,7 +58,7 @@ public class Percolation {
          * and the square to the right is not on the line below (leftmost side), union
          */
         if (right > 0 && right < sideSize * sideSize && grid[right]
-                && col != sideSize-1) {
+                && col != sideSize - 1) {
             backwash.union(currentSquare, right);
             totalGrid.union(currentSquare, right);
             if (backwash.connected(right, topOfGrid)) {
@@ -109,7 +109,7 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        if(totalGrid.connected(topOfGrid, bottomOfGrid)) {
+        if (totalGrid.connected(topOfGrid, bottomOfGrid)) {
             return true;
         }
         return false;
