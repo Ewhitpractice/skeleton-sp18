@@ -52,7 +52,7 @@ public class PercolationStats {
             }
             percolation.open(randomRow, randomCol);
         }
-        double fractionOpened = ((double)percolation.numberOfOpenSites() / (sideSize * sideSize));
+        double fractionOpened = ((double) percolation.numberOfOpenSites() / (sideSize * sideSize));
         return fractionOpened;
     }
 
@@ -62,12 +62,4 @@ public class PercolationStats {
             openSitesArray[i] = findNumberOfOpenSites();
         }
     }
-
-    public static void main(String[] args) {
-        PercolationFactory pf = new PercolationFactory();
-        PercolationStats stats = new PercolationStats(20, 10, pf);
-        System.out.println(stats.mean());
-        System.out.println(stats.stddev());
-    }
-
 }
