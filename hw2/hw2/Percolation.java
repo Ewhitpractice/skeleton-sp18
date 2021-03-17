@@ -19,8 +19,8 @@ public class Percolation {
         grid = new boolean[N * N + 2];
         sideSize = N;
         totalGrid = new WeightedQuickUnionUF(N * N + 2);
-        backwash = new WeightedQuickUnionUF(N * N + 2);
-        topOfGrid = N;
+        backwash = new WeightedQuickUnionUF(N * N + 1);
+        topOfGrid = N * N;
         bottomOfGrid = N * N + 1;
         openSpaces = 0;
         initializeGrid();
@@ -41,7 +41,7 @@ public class Percolation {
             openSpaces++;
         }
 
-        if (left > 0 && left < sideSize * sideSize && grid[left]) {
+        if (left > 0 && left < sideSize * sideSize && grid[left] && currentSquare % sideSize != 0) {
             backwash.union(currentSquare, left);
             totalGrid.union(currentSquare, left);
             if (backwash.connected(left, topOfGrid)) {
@@ -49,7 +49,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
-        if (right > 0 && right < sideSize*sideSize && grid[right]) {
+        if (right > 0 && right < sideSize * sideSize && grid[right]) {
             backwash.union(currentSquare, right);
             totalGrid.union(currentSquare, right);
             if (backwash.connected(right, topOfGrid)) {
@@ -57,7 +57,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
-        if (up > 0 && up < sideSize*sideSize && grid[up]) {
+        if (up > 0 && up < sideSize * sideSize && grid[up]) {
             backwash.union(currentSquare, up);
             totalGrid.union(currentSquare, up);
             if (backwash.connected(up, topOfGrid)) {
@@ -65,7 +65,7 @@ public class Percolation {
                 backwash.union(topOfGrid, currentSquare);
             }
         }
-        if (down > 0 && down < sideSize*sideSize && grid[down]) {
+        if (down > 0 && down < sideSize * sideSize && grid[down]) {
             backwash.union(currentSquare, down);
             totalGrid.union(currentSquare, down);
             if (backwash.connected(down, topOfGrid)) {
@@ -85,9 +85,13 @@ public class Percolation {
 
     /** check to see if a certain spot on the grid is full **/
     public boolean isFull(int row, int col) {
-        checkArgument(row,col);
+        checkArgument(row, col);
         int currentSquare = xyTo1D(row, col);
-        return backwash.connected(topOfGrid, currentSquare) && grid[currentSquare];
+        if(backwash.connected(topOfGrid, currentSquare) && grid[currentSquare])
+        {
+            return true;
+        }
+        return false;
     }
 
     public int numberOfOpenSites() {
@@ -100,26 +104,22 @@ public class Percolation {
 
     //helper method
     private void initializeGrid() {
-        for (int i = 0; i < sideSize + 1; i++) {
+        for (int i = 0; i < sideSize; i++) {
             backwash.union(topOfGrid, i);
         }
-        for (int i = sideSize * sideSize - sideSize; i < sideSize * sideSize; i++) {
+        for (int i = sideSize * sideSize; i > sideSize * sideSize - sideSize; i--) {
             totalGrid.union(bottomOfGrid, i);
         }
     }
 
     private int xyTo1D(int r, int c) {
-        return(r*sideSize + c);
+        return (r * sideSize + c);
     }
 
     private void checkArgument(int row, int col) {
         if (row < 0 || row > sideSize - 1 || col < 0 || col > sideSize - 1) {
             throw new java.lang.IndexOutOfBoundsException();
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 
 

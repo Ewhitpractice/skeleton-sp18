@@ -9,8 +9,6 @@ public class PercolationStats {
     private int sideSize;
     private int[] openSitesArray;
 
-
-
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
             throw new java.lang.IllegalArgumentException();
@@ -64,7 +62,4 @@ public class PercolationStats {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
 }
