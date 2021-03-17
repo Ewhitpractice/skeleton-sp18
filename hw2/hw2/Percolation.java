@@ -20,7 +20,7 @@ public class Percolation {
         sideSize = N;
         totalGrid = new WeightedQuickUnionUF(N * N + 2);
         backwash = new WeightedQuickUnionUF(N * N + 1);
-        topOfGrid = N*N;
+        topOfGrid = N * N;
         bottomOfGrid = N * N + 1;
         openSpaces = 0;
         initializeGrid();
@@ -109,7 +109,7 @@ public class Percolation {
         for (int i = 0; i < sideSize; i++) {
             backwash.union(topOfGrid, i);
         }
-        for (int i = sideSize * sideSize-1; i >= sideSize * sideSize - sideSize; i--) {
+        for (int i = sideSize * sideSize - 1; i >= sideSize * sideSize - sideSize; i--) {
             totalGrid.union(bottomOfGrid, i);
         }
     }
