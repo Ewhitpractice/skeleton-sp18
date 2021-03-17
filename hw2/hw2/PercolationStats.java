@@ -7,7 +7,7 @@ public class PercolationStats {
     private PercolationFactory makePercolation;
     private int timesRepeated;
     private int sideSize;
-    private int[] openSitesArray;
+    private double[] openSitesArray;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
@@ -16,7 +16,6 @@ public class PercolationStats {
         makePercolation = pf;
         timesRepeated = T;
         sideSize = N;
-        openSitesArray = new int[timesRepeated];
         makeArray();
     }
 
@@ -39,7 +38,7 @@ public class PercolationStats {
     }
 
     //helper methods
-    private int findNumberOfOpenSites() {
+    private double findNumberOfOpenSites() {
         //initialize all sites to be blocked
         Percolation percolation = makePercolation.make(sideSize);
         //repeat until system percolates
@@ -53,13 +52,22 @@ public class PercolationStats {
             }
             percolation.open(randomRow, randomCol);
         }
-        return percolation.numberOfOpenSites();
+        double fractionOpened = ((double)percolation.numberOfOpenSites() / (sideSize * sideSize));
+        return fractionOpened;
     }
 
     private void makeArray() {
+        openSitesArray = new double[timesRepeated];
         for (int i = 0; i < timesRepeated; i++) {
             openSitesArray[i] = findNumberOfOpenSites();
         }
+    }
+
+    public static void main(String[] args) {
+        PercolationFactory pf = new PercolationFactory();
+        PercolationStats stats = new PercolationStats(20, 10, pf);
+        System.out.println(stats.mean());
+        System.out.println(stats.stddev());
     }
 
 }
