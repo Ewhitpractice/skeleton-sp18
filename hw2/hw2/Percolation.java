@@ -41,7 +41,11 @@ public class Percolation {
             openSpaces++;
         }
 
-        if (left >= 0 && left < sideSize * sideSize && grid[left] && currentSquare % sideSize != 0) {
+        /** if the square to the left of the current square is in bounds
+         * and the left square is not on the line above (on the rightmost side), union
+         */
+        if (left >= 0 && left < sideSize * sideSize && grid[left]
+                && col != 0) {
             backwash.union(currentSquare, left);
             totalGrid.union(currentSquare, left);
             if (backwash.connected(left, topOfGrid)) {
@@ -50,7 +54,11 @@ public class Percolation {
             }
         }
 
-        if (right > 0 && right < sideSize * sideSize && grid[right] && currentSquare+1 % sideSize != 0) {
+        /**if the square to the right of the current square is in bounds
+         * and the square to the right is not on the line below (leftmost side), union
+         */
+        if (right > 0 && right < sideSize * sideSize && grid[right]
+                && col != sideSize-1) {
             backwash.union(currentSquare, right);
             totalGrid.union(currentSquare, right);
             if (backwash.connected(right, topOfGrid)) {
