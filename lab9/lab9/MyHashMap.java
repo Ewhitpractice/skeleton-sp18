@@ -1,5 +1,4 @@
 package lab9;
-
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,7 +25,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         this.clear();
     }
 
-    /* Removes all of the mappings from this map. */
+    /** Removes all of the mappings from this map. */
     @Override
     public void clear() {
         this.size = 0;
@@ -48,24 +47,35 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return Math.floorMod(key.hashCode(), numBuckets);
     }
 
-    /* Returns the value to which the specified key is mapped, or null if this
-     * map contains no mapping for the key.
-     */
+    /** Returns the value to which the specified key is mapped, or null if this
+     * map contains no mapping for the key. */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("argument to get() is null");
+        }
+        int i = hash(key);
+        return buckets[i].get(key);
     }
 
-    /* Associates the specified value with the specified key in this map. */
+    /** Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if(key == null) {
+            throw new IllegalArgumentException("first argument to put() is null");
+        }
+        int i = hash(key);
+        if(!buckets[i].containsKey(key)) {
+            size++;
+        }
+        buckets[i].put(key, value);
     }
+
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
