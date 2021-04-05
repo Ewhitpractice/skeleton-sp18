@@ -102,7 +102,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         //if the index has a smaller priority, swap with parent
-        while(index > 1 && min(index,parentIndex(index)) == index) {
+        while (index > 1 && min(index,parentIndex(index)) == index) {
             swap(index,parentIndex(index));
             index = parentIndex(index);
         }
@@ -120,13 +120,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         int LI = leftIndex(index);
 
         //while the index has a larger priority than its children, swap
-        int smallerChild = min(RI,LI);
-        while(min(index,smallerChild) == smallerChild) {
-            swap(index,smallerChild);
+        int smallerChild = min(RI, LI);
+        while (min(index, smallerChild) == smallerChild) {
+            swap(index, smallerChild);
             index = smallerChild;
             RI = rightIndex(index);
             LI = leftIndex(index);
-            smallerChild = min(RI,LI);
+            smallerChild = min(RI, LI);
         }
     }
 
