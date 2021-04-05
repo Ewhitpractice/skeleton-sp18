@@ -121,7 +121,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
 
         //while the index has a larger priority than its children, swap
         int smallerChild = min(RI, LI);
-        while (min(index, smallerChild) == smallerChild) {
+        while (min(index, smallerChild) == smallerChild && index < size) {
             swap(index, smallerChild);
             index = smallerChild;
             RI = rightIndex(index);
