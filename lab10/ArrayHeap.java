@@ -27,24 +27,21 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node to the left of the node at i.
      */
     private static int leftIndex(int i) {
-        /* TODO: Your code here! */
-        return 0;
+        return 2 * i;
     }
 
     /**
      * Returns the index of the node to the right of the node at i.
      */
     private static int rightIndex(int i) {
-        /* TODO: Your code here! */
-        return 0;
+        return 2 * i + 1;
     }
 
     /**
      * Returns the index of the node that is the parent of the node at i.
      */
     private static int parentIndex(int i) {
-        /* TODO: Your code here! */
-        return 0;
+        return i / 2;
     }
 
     /**
@@ -64,10 +61,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * invalid because we leave the 0th entry blank.
      */
     private boolean inBounds(int index) {
-        if ((index > size) || (index < 1)) {
-            return false;
-        }
-        return true;
+        return (index <= size) && (index >= 1);
     }
 
     /**
@@ -107,8 +101,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
 
-        /** TODO: Your code here. */
-        return;
+        //if the index has a smaller priority, swap with parent
+        while (index > 1 && min(index,parentIndex(index)) == index) {
+            swap(index,parentIndex(index));
+            index = parentIndex(index);
+        }
     }
 
     /**
@@ -118,8 +115,19 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
 
-        /** TODO: Your code here. */
-        return;
+        //find the children of the current node
+        int RI = rightIndex(index);
+        int LI = leftIndex(index);
+
+        //while the index has a larger priority than its children, swap
+        int smallerChild = min(RI, LI);
+        while (min(index, smallerChild) == smallerChild) {
+            swap(index, smallerChild);
+            index = smallerChild;
+            RI = rightIndex(index);
+            LI = leftIndex(index);
+            smallerChild = min(RI, LI);
+        }
     }
 
     /**
@@ -133,7 +141,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             resize(contents.length * 2);
         }
 
-        /* TODO: Your code here! */
+        //add it to the end of the array list
+        Node toInsert = new Node(item,priority);
+        size++;
+        contents[size] = toInsert;
+        swim(size);
     }
 
     /**
@@ -142,8 +154,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T peek() {
-        /* TODO: Your code here! */
-        return null;
+        return contents[1].myItem;
     }
 
     /**
@@ -157,8 +168,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T removeMin() {
-        /* TODO: Your code here! */
-        return null;
+        Node smallestPriority = contents[1];
+        Node lastItem = contents[size];
+        contents[size] = null;
+        size--;
+
+        contents[1] = lastItem;
+        sink(1);
+        return smallestPriority.myItem;
     }
 
     /**
@@ -180,8 +197,21 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        /* TODO: Your code here! */
-        return;
+        int index = 1;
+        while (index < size) {
+            //check to see if matching item at index
+            if (contents[index].myItem.equals(item)) {
+                double oldPriority = contents[index].myPriority;
+                contents[index].myPriority = priority;
+                if(oldPriority < priority) {
+                    sink(index);
+                }
+                else {
+                    swim(index);
+                }
+                break;
+            }
+        }
     }
 
     /**
