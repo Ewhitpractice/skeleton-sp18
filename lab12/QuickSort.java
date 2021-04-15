@@ -47,13 +47,59 @@ public class QuickSort {
     private static <Item extends Comparable> void partition(
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
-        // Your code here!
+        int size = unsorted.size();
+        while (!unsorted.isEmpty()) {
+            Item item = unsorted.dequeue();
+            if (item.compareTo(pivot) < 0) {
+                less.enqueue(item);
+            }
+            else if (item.compareTo(pivot) > 0) {
+                greater.enqueue(item);
+            }
+            else {
+                equal.enqueue(item);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        if(items.size() <= 1) {
+            return items;
+        }
+
+        Queue<Item> less = new Queue<Item>();
+        Queue<Item> greater = new Queue<Item>();
+        Queue<Item> equal = new Queue<Item>();
+        Item randomItem = getRandomItem(items);
+
+        //partition on a random person
+        partition(items, randomItem, less, equal, greater);
+
+        //keep quick sorting on the less queue and then the greater queue
+        less = quickSort(less);
+        greater = quickSort(greater);
+
+        //concatenate
+        less = catenate(less,equal);
+        greater = catenate(less,greater);
+
+        return greater;
+    }
+
+    public static void main(String args[]) {
+        Queue<String> originalQueue = new Queue();
+        originalQueue.enqueue("Anna");
+        originalQueue.enqueue("Natalia");
+        originalQueue.enqueue("Dan");
+        originalQueue.enqueue("Zeke");
+        originalQueue.enqueue("Ryan");
+        originalQueue.enqueue("Ted");
+        originalQueue.enqueue("Jenny");
+        System.out.println(originalQueue);
+
+        Queue<String> sortedQueue = QuickSort.quickSort(originalQueue);
+        System.out.println(sortedQueue);
     }
 }
