@@ -117,7 +117,7 @@ public class SeamCarver {
         //find the lowest energy in the last row with minimum distance
         double lastRowMin = Integer.MAX_VALUE;
         int colOfLastRowMin = 0;
-        for(int i = 0; i < orientationWidth - 1; i++) {
+        for(int i = 0; i < orientationWidth; i++) {
             if(distTo[i][orientationHeight - 1] < lastRowMin) {
                 lastRowMin = distTo[i][orientationHeight-1];
                 colOfLastRowMin = i;
