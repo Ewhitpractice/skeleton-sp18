@@ -1,4 +1,6 @@
+import java.awt.Color;
 import edu.princeton.cs.algs4.Picture;
+
 public class SeamCarver {
     //Instance variables
     private static final boolean horizontalOrientation = false;
@@ -158,26 +160,27 @@ public class SeamCarver {
         orientation = ori;
         //vertical orientation used for the vertical seam
         if(orientation == verticalOrientation) {
-            orientationWidth = currentPicture.width();
-            orientationHeight = currentPicture.height();
+            orientationWidth = width;
+            orientationHeight = height;
         }
         //horizontal orientation used for the horizontal seam
         else {
-            orientationWidth = currentPicture.height();
-            orientationHeight = currentPicture.width();
+            orientationWidth = height;
+            orientationHeight = width;
         }
     }
 
     private double summedRGBDifferencesX(int rightCol, int leftCol, int row) {
-        int rgb2 = currentPicture.getRGB(rightCol, row);
-        int r2 = calcRed(rgb2);
-        int g2 = calcGreen(rgb2);
-        int b2 = calcBlue(rgb2);
+        Color rgb2 = currentPicture.get(rightCol, row);
+        int r2 = rgb2.getRed();
+        int g2 = rgb2.getGreen();
+        int b2 = rgb2.getBlue();
 
-        int rgb1 = currentPicture.getRGB(leftCol, row);
-        int r1 = calcRed(rgb1);
-        int g1 = calcGreen(rgb1);
-        int b1 = calcBlue(rgb1);
+
+        Color rgb1 = currentPicture.get(leftCol, row);
+        int r1 = rgb1.getRed();
+        int g1 = rgb1.getGreen();
+        int b1 = rgb1.getBlue();
 
         //right column minus left column
         int Rx = Math.abs(r2 - r1);
@@ -188,15 +191,15 @@ public class SeamCarver {
     }
 
     private double summedRGBDifferencesY(int upperRow, int lowerRow, int col) {
-        int rgb2 = currentPicture.getRGB(col, upperRow);
-        int r2 = calcRed(rgb2);
-        int g2 = calcGreen(rgb2);
-        int b2 = calcBlue(rgb2);
+        Color rgb2 = currentPicture.get(col, upperRow);
+        int r2 = rgb2.getRed();
+        int g2 = rgb2.getGreen();
+        int b2 = rgb2.getBlue();
 
-        int rgb1 = currentPicture.getRGB(col, lowerRow);
-        int r1 = calcRed(rgb1);
-        int g1 = calcGreen(rgb1);
-        int b1 = calcBlue(rgb1);
+        Color rgb1 = currentPicture.get(col, lowerRow);
+        int r1 = rgb1.getRed();
+        int g1 = rgb1.getGreen();
+        int b1 = rgb1.getBlue();
 
         //upper row minus lower row
         int Ry = Math.abs(r2 - r1);
