@@ -17,7 +17,8 @@ public class SeamCarver {
 
 
     public SeamCarver(Picture picture) {
-        currentPicture = picture;
+        //copy constructor
+        currentPicture = new Picture(picture);
         height = picture.height();
         width = picture.width();
         initiateOrientation(verticalOrientation);
