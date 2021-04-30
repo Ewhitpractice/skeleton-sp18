@@ -143,7 +143,7 @@ public class SeamCarver {
                     newPicture.set(j, i, currentPicture.get(j,i));
                 }
                 else {
-                    if(j < newPicture.width()) {
+                    if(j < orientationWidth - 1) {
                         newPicture.set(j, i, currentPicture.get(j + 1, i));
                     }
                 }
