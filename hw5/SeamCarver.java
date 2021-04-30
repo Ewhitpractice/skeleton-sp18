@@ -135,7 +135,7 @@ public class SeamCarver {
     }
 
     public void removeVerticalSeam(int[] seam) {
-        Picture newPicture = new Picture(orientationWidth, height);
+        Picture newPicture = new Picture(orientationWidth, orientationHeight);
 
         for(int i = 0; i < newPicture.height(); i++) {
             for(int j = 0; j < newPicture.width(); j++) {
@@ -143,7 +143,9 @@ public class SeamCarver {
                     newPicture.set(j, i, currentPicture.get(j,i));
                 }
                 else {
-                    newPicture.set(j,i,currentPicture.get(j+1,i));
+                    if(j < newPicture.width()) {
+                        newPicture.set(j, i, currentPicture.get(j + 1, i));
+                    }
                 }
             }
         }
